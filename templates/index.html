@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+    .formb {
+        width: 22%;
+        height: 200px;
+        border: 1px solid black;
+        border-radius: 4px;
+        display: inline-block;
+        margin: 10px;
+        padding-top: 30px;
+    }
+    .flowin {
+        height:120px;
+        width:95%;
+        border:1px solid #ccc;
+        font:16px/26px Georgia, Garamond, Serif;
+        overflow:auto;
+        margin: 0px auto;
+    }
+    .push {
+        margin-left: 30px;
+    }
+    .pd {
+        margin-top:20px;
+    }
+    .red {
+        color: red;
+    }
+    .green {
+        color: green;
+    }
+    
+</style>
+<body>
+    <div class="container jumbotron-fluid pd">
+        
+        <h4 class="push">Your Gold: {{session['total']}}</h4>
+        
+        <div class="text-center">
+            <form action='/process_money' method='POST' class="formb">
+                <h3>Farm</h3>
+                <p>(earns 10-20 golds)</p>
+                <input type="hidden" name="hidden" value="Farm">
+                <input type="submit" name="submit" value="Find Gold!">
+            </form>
+            <form action='/process_money' method='POST' class="formb">
+                <h3>Cave</h3>
+                <p>(earns 5-10 golds)</p>
+                <input type="hidden" name="hidden" value="Cave">
+                <input type="submit" name="submit" value="Find Gold!">
+            </form>
+            <form action='/process_money' method='POST' class="formb">
+                <h3>House</h3>
+                <p>(earns 2-5 golds)</p>
+                <input type="hidden" name="hidden" value="House">
+                <input type="submit" name="submit" value="Find Gold!">
+            </form>
+            <form action='/process_money' method='POST' class="formb">
+                <h3>Casino</h3>
+                <p>(earns/takes 0-50 golds)</p>
+                <input type="hidden" name="hidden" value="Casino">
+                <input type="submit" name="submit" value="Find Gold!">
+            </form>
+        </div>
+       <p class="push">Activities</p>
+        <div class="flowin">
+            {%for activity in session['activities']%}
+                {%if activity.startswith("Earned"):%}
+                    <p class="green">{{ activity }}</p>
+                {%else%}
+                    <p class="red">{{ activity }}</p>
+            {%endif%}   
+            {%endfor%}
+        </div>
+        <form action='/reset' method='POST'>
+            <input type="submit" name="submit" value="Reset" class="push pd">
+        </form>
+    </div>
+    
+</body>
+</html>
